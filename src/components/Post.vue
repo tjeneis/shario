@@ -4,6 +4,7 @@
     class="mb-4"
     flat
     light
+    @click="$root.$emit('open-post', post.id)"
   >
     <v-img
       v-if="post.data.image"
@@ -17,9 +18,11 @@
       <v-chip
         v-if="author"
         class="font-weight-bold"
-        :color="author.data.color"
         dark
         label
+        :style="{
+          color: author.data.color,
+        }"
       >
         {{ author.data.name.toLowerCase() }}
       </v-chip>
@@ -33,7 +36,7 @@
         @click="likePost"
       >
         <v-icon
-          class="mr-2"
+          class="mr-1"
           color="#C9C9C9"
           :size="18"
         >
@@ -109,6 +112,20 @@ export default {
       letter-spacing: normal;
       line-height: 1.625rem;
       word-break: break-word;
+    }
+
+    .v-chip {
+      background: none !important;
+
+      &:before {
+        opacity: 0.15;
+      }
+
+      &:hover {
+        &:before {
+          opacity: 0.15;
+        }
+      }
     }
   }
 </style>

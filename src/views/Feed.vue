@@ -44,12 +44,15 @@
         :initial-post="post"
       />
     </masonry>
+
+    <full-post />
   </v-container>
 </template>
 
 <script>
 import Repository from '@/repositories/RepositoryFactory';
 import Logo from '@/assets/io-logo.svg';
+import FullPost from '@/components/FullPost.vue';
 import Post from '@/components/Post.vue';
 
 const AuthorRepository = Repository.get('authors');
@@ -58,12 +61,14 @@ const PostRepository = Repository.get('posts');
 export default {
   name: 'Feed',
   components: {
+    FullPost,
     Logo,
     Post,
   },
   data() {
     return {
       authors: [],
+      open: false,
       posts: [],
     };
   },
