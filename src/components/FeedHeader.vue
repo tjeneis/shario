@@ -1,22 +1,27 @@
 <template>
   <v-parallax
-    :height="350"
     src="@/assets/banners/ricoh-building.jpg"
   >
     <v-row
-      justify="space-between"
+      align="center"
+      class="flex-grow-0"
     >
       <v-col
+        class="d-flex"
         cols="12"
         md="auto"
       >
         <logo class="logo" />
       </v-col>
+      <v-spacer />
       <v-col
         cols="12"
         md="auto"
       >
-        <v-row dense>
+        <v-row
+          align="center"
+          dense
+        >
           <v-col
             v-for="author in authors"
             :key="author.id"
@@ -32,6 +37,32 @@
             </v-chip>
           </v-col>
         </v-row>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          icon
+          @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+        >
+          <v-icon>mdi-white-balance-sunny</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-row
+      class="flex-grow-0"
+      justify="center"
+    >
+      <v-col
+        class="text-center"
+        cols="8"
+        md="6"
+      >
+        <h2 class="text-h4 font-italic font-weight-regular mb-3">
+          {{ $t('StayUpdated') }}
+        </h2>
+        <h3 class="text-h3 font-weight-medium">
+          State of iO
+        </h3>
       </v-col>
     </v-row>
   </v-parallax>
@@ -68,9 +99,15 @@ export default {
 <style lang="scss" scoped>
   .v-parallax::v-deep {
     .v-parallax__content {
-      background-color: rgb(31 31 31 / 50%);
-      background: linear-gradient(0deg, var(--v-primary-base), rgb(31 31 31 / 50%));
+      justify-content: start;
       padding: 24px;
+
+      .v-application.theme--dark & {
+        background: linear-gradient(0deg, #121212, rgb(18 18 18 / 25%));
+      }
+      .v-application.theme--light & {
+        background: linear-gradient(0deg, rgb(18 18 18 / 75%), rgb(18 18 18 / 25%));
+      }
     }
   }
 </style>

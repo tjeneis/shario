@@ -3,7 +3,6 @@
     v-if="post"
     class="mb-4"
     flat
-    light
     @click="$root.$emit('open-post', post.id)"
   >
     <v-img

@@ -1,14 +1,17 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
 
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
 Vue.use(Vuetify);
 
-export default new Vuetify({
+// eslint-disable-next-line import/prefer-default-export
+export const vuetify = new Vuetify({
   theme: {
     options: {
       customProperties: true,
     },
-    dark: true,
+    dark: mq.matches,
     themes: {
       light: {
         default: '#FFFFFF',
@@ -34,4 +37,8 @@ export default new Vuetify({
       },
     },
   },
+});
+
+mq.addEventListener('change', (e) => {
+  vuetify.framework.theme.dark = e.matches;
 });

@@ -6,7 +6,6 @@
   >
     <v-card
       class="rounded-t-lg rounded-b-0"
-      light
       min-height="100vh"
     >
       <template v-if="post">

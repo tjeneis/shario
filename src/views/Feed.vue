@@ -4,7 +4,7 @@
 
     <v-container
       :style="{
-        marginTop: '-60px'
+        marginTop: '-200px'
       }"
     >
       <masonry
@@ -56,7 +56,7 @@ export default {
       this.authors = data?.items;
     },
     async getPosts() {
-      const { data } = await PostRepository.get();
+      const { data } = await PostRepository.get({ params: { $orderby: 'created desc' } });
       this.posts = data?.items;
     },
   },

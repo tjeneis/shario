@@ -1,9 +1,6 @@
 <template>
   <v-app
     id="app"
-    :style="{
-      backgroundColor: 'var(--v-primary-base)'
-    }"
   >
     <v-main>
       <router-view />

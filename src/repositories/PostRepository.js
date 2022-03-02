@@ -3,8 +3,8 @@ import SquidexClient from '@/clients/SquidexClient';
 const resource = '/posts';
 
 export default {
-  get() {
-    return SquidexClient.get(`${resource}`);
+  get(payload) {
+    return SquidexClient.get(`${resource}`, payload);
   },
   getPost(id) {
     return SquidexClient.get(`${resource}/${id}`);
