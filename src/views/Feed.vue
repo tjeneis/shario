@@ -3,10 +3,7 @@
     <feed-header />
 
     <v-container
-      class="pa-6 pt-0"
-      :style="{
-        marginTop: $vuetify.breakpoint.mdAndUp ? '-200px' : 0
-      }"
+      class="pa-6 pt-0 mt-n12"
     >
       <masonry
         :gutter="16"

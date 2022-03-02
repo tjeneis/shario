@@ -81,12 +81,12 @@ export default {
       background: none !important;
 
       &:before {
-        opacity: 0.15;
+        opacity: 0.05;
       }
 
       &:hover {
         &:before {
-          opacity: 0.15;
+          opacity: 0.05;
         }
       }
     }

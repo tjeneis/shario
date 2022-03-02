@@ -11,7 +11,7 @@
         <div class="pa-6">
           <v-row>
             <v-col cols="auto">
-              <h1 class="text-h6 font-weight-bold mb-1">
+              <h1 class="text-h6 font-weight-bold mb-2">
                 {{ post.data.title }}
               </h1>
               <v-row
@@ -74,15 +74,7 @@
           </v-row>
         </div>
 
-        <v-card-text>
-          <v-img
-            v-if="post.data.image"
-            :max-height="$vuetify.breakpoint.mdAndUp ? 400 : 300"
-            :src="`${srcBase}/${post.data.image[0]}`"
-          />
-
-          <div v-html="post.data.content" />
-        </v-card-text>
+        <v-card-text v-html="post.data.content" />
       </template>
     </v-card>
   </v-bottom-sheet>
@@ -126,12 +118,12 @@ export default {
       background: none !important;
 
       &:before {
-        opacity: 0.15;
+        opacity: 0.05;
       }
 
       &:hover {
         &:before {
-          opacity: 0.15;
+          opacity: 0.05;
         }
       }
     }
