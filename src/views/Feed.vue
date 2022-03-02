@@ -3,13 +3,14 @@
     <feed-header />
 
     <v-container
+      class="pa-6 pt-0"
       :style="{
-        marginTop: '-200px'
+        marginTop: $vuetify.breakpoint.mdAndUp ? '-200px' : 0
       }"
     >
       <masonry
         :gutter="16"
-        :cols="{ default: 4, 1024: 4, 768: 3, 425: 2, 374: 1 }"
+        :cols="{ default: 4, 1024: 3, 768: 2, 425: 1 }"
       >
         <post
           v-for="post in posts"

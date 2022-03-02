@@ -14,3 +14,14 @@ export default {
   }),
 };
 </script>
+
+<style lang="scss">
+  .v-application {
+    &.theme--light {
+      background: #f7f7f7 !important;
+    }
+    &.theme--dark {
+      background: #121212 !important;
+    }
+  }
+</style>

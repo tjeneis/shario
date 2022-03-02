@@ -15,7 +15,7 @@ export const vuetify = new Vuetify({
     themes: {
       light: {
         default: '#FFFFFF',
-        primary: '#1F1F1F',
+        primary: '#365fd9',
         secondary: '#868ada',
         tertiary: '#9caee9',
         accent: '#82B1FF',
@@ -26,7 +26,7 @@ export const vuetify = new Vuetify({
       },
       dark: {
         default: '#1F1D2C',
-        primary: '#1F1F1F',
+        primary: '#365fd9',
         secondary: '#868ada',
         tertiary: '#9caee9',
         accent: '#82B1FF',

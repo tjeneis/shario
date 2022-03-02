@@ -5,81 +5,98 @@
     scrollable
   >
     <v-card
-      class="rounded-t-lg rounded-b-0"
       min-height="100vh"
     >
       <template v-if="post">
-        <v-img
-          v-if="post.data.image"
-          :max-height="$vuetify.breakpoint.mdAndUp ? 400 : 300"
-          :src="`${srcBase}/${post.data.image[0]}`"
-          :style="{
-            overflow: 'visible'
-          }"
-        >
-          <v-btn
-            fab
-            :style="{
-              left: '24px',
-              position: 'absolute',
-              top: '24px'
-            }"
-            small
-            @click="open = false"
-          >
-            <v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
+        <div class="pa-6">
+          <v-row>
+            <v-col cols="auto">
+              <h1 class="text-h6 font-weight-bold mb-1">
+                {{ post.data.title }}
+              </h1>
+              <v-row
+                align="center"
+              >
+                <v-col cols="auto">
+                  <v-chip
+                    class="font-weight-bold"
+                    label
+                    small
+                  >
+                    {{ author.data.name.toLowerCase() }}
+                  </v-chip>
+                </v-col>
+                <v-col
+                  class="pl-0"
+                  cols="auto"
+                >
+                  {{ post.created | moment('LLLL') }}
+                </v-col>
+              </v-row>
+            </v-col>
 
-          <v-btn
-            fab
-            :style="{
-              bottom: '0',
-              position: 'absolute',
-              right: '24px',
-              transform: 'translate(0, 50%)'
-            }"
-            small
-            @click="open = false"
-          >
-            <v-icon>mdi-heart-outline</v-icon>
-          </v-btn>
-        </v-img>
+            <v-spacer />
 
-        <v-card-actions class="pa-6 pb-3">
-          <v-chip
-            v-if="author"
-            class="font-weight-bold"
-            dark
-            label
-            :style="{
-              color: author.data.color,
-            }"
-          >
-            {{ author.data.name.toLowerCase() }}
-          </v-chip>
-        </v-card-actions>
+            <v-col cols="auto">
+              <v-row align="center">
+                <v-col cols="auto">
+                  <v-tooltip>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon
+                        :color="likedPosts.includes(post.id) ? '#EA4C89' : '#C9C9C9'"
+                        :loading="loading.like"
+                        v-bind="attrs"
+                        @click.native.stop="likePost(post.id)"
+                        v-on="on"
+                      >
+                        {{ likedPosts.includes(post.id) ? 'mdi-heart' : 'mdi-heart-outline' }}
+                      </v-icon>
+                    </template>
+                    <span>{{ $t('LikePost') }}</span>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="auto">
+                  <v-tooltip>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="open = false"
+                      >
+                        mdi-close
+                      </v-icon>
+                    </template>
+                    <span>{{ $t('ClosePost') }}</span>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </div>
 
-        <v-card-title class="font-weight-bold">
-          {{ post.data.title }}
-        </v-card-title>
-        <v-card-text v-html="post.data.content" />
+        <v-card-text>
+          <v-img
+            v-if="post.data.image"
+            :max-height="$vuetify.breakpoint.mdAndUp ? 400 : 300"
+            :src="`${srcBase}/${post.data.image[0]}`"
+          />
+
+          <div v-html="post.data.content" />
+        </v-card-text>
       </template>
     </v-card>
   </v-bottom-sheet>
 </template>
 
 <script>
-import Repository from '@/repositories/RepositoryFactory';
-
-const AuthorRepository = Repository.get('authors');
-const PostRepository = Repository.get('posts');
+import PostsMixin from '@/mixins/postsMixin';
 
 export default {
   name: 'FullPost',
+  mixins: [PostsMixin],
   data() {
     return {
       author: undefined,
-      loading: false,
       open: false,
       post: undefined,
       srcBase: `${process.env.VUE_APP_SQUIDEX_BASE_URI}/assets/${process.env.VUE_APP_SQUIDEX_APP}`,
@@ -93,18 +110,6 @@ export default {
         });
       this.open = true;
     });
-  },
-  methods: {
-    async getAuthor(id) {
-      const { data } = await AuthorRepository.getAuthor(id);
-      this.author = data;
-    },
-    async getPost(id) {
-      this.loading = true;
-      const { data } = await PostRepository.getPost(id);
-      this.post = data;
-      this.loading = false;
-    },
   },
 };
 </script>

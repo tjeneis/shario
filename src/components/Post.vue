@@ -17,11 +17,8 @@
       <v-chip
         v-if="author"
         class="font-weight-bold"
-        dark
         label
-        :style="{
-          color: author.data.color,
-        }"
+        small
       >
         {{ author.data.name.toLowerCase() }}
       </v-chip>
@@ -31,15 +28,15 @@
       <v-btn
         color="transparent"
         depressed
-        :loading="loading.likes"
-        @click="likePost"
+        :loading="loading.like"
+        @click.native.stop="likePost(post.id)"
       >
         <v-icon
-          class="mr-1"
-          color="#C9C9C9"
+          :color="likedPosts.includes(post.id) ? '#EA4C89' : '#C9C9C9'"
+          left
           :size="18"
         >
-          mdi-heart
+          {{ likedPosts.includes(post.id) ? 'mdi-heart' : 'mdi-heart-outline' }}
         </v-icon>
         {{ post.data.likes }}
       </v-btn>
@@ -48,13 +45,11 @@
 </template>
 
 <script>
-import Repository from '@/repositories/RepositoryFactory';
-
-const AuthorRepository = Repository.get('authors');
-const PostRepository = Repository.get('posts');
+import PostsMixin from '@/mixins/postsMixin';
 
 export default {
   name: 'Post',
+  mixins: [PostsMixin],
   props: {
     initialPost: {
       type: Object,
@@ -64,43 +59,12 @@ export default {
   data() {
     return {
       author: undefined,
-      loading: {
-        likes: false,
-      },
       post: this.initialPost,
       srcBase: `${process.env.VUE_APP_SQUIDEX_BASE_URI}/assets/${process.env.VUE_APP_SQUIDEX_APP}`,
     };
   },
   created() {
     this.getAuthor(this.post.data.author[0]);
-  },
-  methods: {
-    async getAuthor(id) {
-      const { data } = await AuthorRepository.getAuthor(id);
-      this.author = data;
-    },
-    async likePost() {
-      this.loading.likes = true;
-      const { id } = this.post;
-      let { data: { likes } } = this.post;
-
-      // eslint-disable-next-line no-plusplus
-      likes++;
-
-      PostRepository
-        .patch({
-          likes: {
-            iv: likes,
-          },
-        }, id)
-        .then(() => {
-          // eslint-disable-next-line no-plusplus
-          this.post.data.likes++;
-        })
-        .finally(() => {
-          this.loading.likes = false;
-        });
-    },
   },
 };
 </script>

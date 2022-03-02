@@ -1,5 +1,6 @@
 <template>
   <v-parallax
+    :height="$vuetify.breakpoint.mdAndUp ? 500 : 'auto'"
     src="@/assets/banners/ricoh-building.jpg"
   >
     <v-row
@@ -9,17 +10,30 @@
       <v-col
         class="d-flex"
         cols="12"
-        md="auto"
+        md="6"
       >
         <logo class="logo" />
       </v-col>
-      <v-spacer />
+      <v-col
+        class="text-center my-6"
+        cols="12"
+        order-md="3"
+      >
+        <h2 class="text-h4 font-italic font-weight-regular mb-3">
+          {{ $t('StayUpdated') }}
+        </h2>
+        <h3 class="text-h3 font-weight-medium">
+          State of iO
+        </h3>
+      </v-col>
       <v-col
         cols="12"
-        md="auto"
+        md="6"
+        order-md="2"
       >
         <v-row
           align="center"
+          justify-md="end"
           dense
         >
           <v-col
@@ -29,56 +43,38 @@
           >
             <v-chip
               class="font-weight-bold"
-              color="white"
-              light
               label
             >
               {{ author.data.name.toLowerCase() }}
             </v-chip>
           </v-col>
+          <v-col
+            v-if="$vuetify.breakpoint.mdAndUp"
+            cols="auto"
+          >
+            <v-btn
+              icon
+              @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+            >
+              <v-icon>mdi-white-balance-sunny</v-icon>
+            </v-btn>
+          </v-col>
         </v-row>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn
-          icon
-          @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-        >
-          <v-icon>mdi-white-balance-sunny</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
-
-    <v-row
-      class="flex-grow-0"
-      justify="center"
-    >
-      <v-col
-        class="text-center"
-        cols="8"
-        md="6"
-      >
-        <h2 class="text-h4 font-italic font-weight-regular mb-3">
-          {{ $t('StayUpdated') }}
-        </h2>
-        <h3 class="text-h3 font-weight-medium">
-          State of iO
-        </h3>
       </v-col>
     </v-row>
   </v-parallax>
 </template>
 
 <script>
-import Repository from '@/repositories/RepositoryFactory';
+import PostsMixin from '@/mixins/postsMixin';
 import Logo from '@/assets/io-logo.svg';
-
-const AuthorRepository = Repository.get('authors');
 
 export default {
   name: 'FeedHeader',
   components: {
     Logo,
   },
+  mixins: [PostsMixin],
   data() {
     return {
       authors: [],
@@ -86,12 +82,6 @@ export default {
   },
   created() {
     this.getAuthors();
-  },
-  methods: {
-    async getAuthors() {
-      const { data } = await AuthorRepository.get();
-      this.authors = data?.items;
-    },
   },
 };
 </script>
