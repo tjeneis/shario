@@ -1,59 +1,33 @@
 <template>
-  <v-container>
-    <v-row
-      align="center"
-      class="mt-0 mb-3"
-      justify="space-between"
-    >
-      <v-col
-        cols="12"
-        md="auto"
-      >
-        <logo class="logo" />
-      </v-col>
-      <v-col
-        cols="12"
-        md="auto"
-      >
-        <v-row dense>
-          <v-col
-            v-for="author in authors"
-            :key="author.id"
-            cols="auto"
-          >
-            <v-chip
-              class="font-weight-bold"
-              :color="author.data.color"
-              dark
-              label
-            >
-              {{ author.data.name.toLowerCase() }}
-            </v-chip>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+  <div>
+    <feed-header />
 
-    <masonry
-      :gutter="16"
-      :cols="{ default: 6, 1024: 4, 768: 3, 425: 2, 375: 1 }"
+    <v-container
+      :style="{
+        marginTop: '-60px'
+      }"
     >
-      <post
-        v-for="post in posts"
-        :key="post.id"
-        :initial-post="post"
-      />
-    </masonry>
+      <masonry
+        :gutter="16"
+        :cols="{ default: 4, 1024: 4, 768: 3, 425: 2, 374: 1 }"
+      >
+        <post
+          v-for="post in posts"
+          :key="post.id"
+          :initial-post="post"
+        />
+      </masonry>
 
-    <full-post />
-  </v-container>
+      <full-post />
+    </v-container>
+  </div>
 </template>
 
 <script>
 import Repository from '@/repositories/RepositoryFactory';
-import Logo from '@/assets/io-logo.svg';
-import FullPost from '@/components/FullPost.vue';
-import Post from '@/components/Post.vue';
+import FullPost from '@/components/FullPost';
+import Post from '@/components/Post';
+import FeedHeader from '@/components/FeedHeader';
 
 const AuthorRepository = Repository.get('authors');
 const PostRepository = Repository.get('posts');
@@ -61,8 +35,8 @@ const PostRepository = Repository.get('posts');
 export default {
   name: 'Feed',
   components: {
+    FeedHeader,
     FullPost,
-    Logo,
     Post,
   },
   data() {
