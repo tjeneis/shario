@@ -8,37 +8,43 @@
     <v-card
       min-height="100vh"
     >
-      <template v-if="post">
-        <div class="pa-6">
-          <v-row>
-            <v-col cols="auto">
-              <h1 class="text-h6 font-weight-bold mb-2">
-                {{ post.data.title }}
-              </h1>
-              <v-row
-                align="center"
-              >
-                <v-col cols="auto">
-                  <v-chip
-                    class="font-weight-bold"
-                    dark
-                    small
-                  >
-                    {{ author.data.name.toLowerCase() }}
-                  </v-chip>
-                </v-col>
-                <v-col
-                  class="pl-0"
-                  cols="auto"
-                >
-                  {{ post.created | moment('LLLL') }}
-                </v-col>
-              </v-row>
-            </v-col>
+      <div
+        v-if="post"
+        class="mx-auto"
+        :style="{
+          maxWidth: '900px'
+        }"
+      >
+        <v-row class="pt-6 mb-2">
+          <v-col cols="auto">
+            <v-chip
+              class="font-weight-bold"
+              dark
+              small
+            >
+              {{ author.data.name.toLowerCase() }}
+            </v-chip>
+          </v-col>
+          <v-col
+            class="pl-0"
+            cols="auto"
+          >
+            {{ post.created | moment('LLLL') }}
+          </v-col>
+        </v-row>
 
-            <v-spacer />
+        <h1 class="text-h5 font-weight-bold mb-6">
+          {{ post.data.title }}
+        </h1>
 
-            <v-col cols="auto">
+        <v-img
+          v-if="post.data.image"
+          class="mb-6"
+          :max-height="480"
+          :src="`${srcBase}/${post.data.image[0]}`"
+        />
+
+        <!-- <v-col cols="auto">
               <v-row align="center">
                 <v-col cols="auto">
                   <v-tooltip>
@@ -71,12 +77,10 @@
                   </v-tooltip>
                 </v-col>
               </v-row>
-            </v-col>
-          </v-row>
-        </div>
+            </v-col> -->
 
-        <v-card-text v-html="post.data.content" />
-      </template>
+        <div v-html="post.data.content" />
+      </div>
     </v-card>
   </v-bottom-sheet>
 </template>
