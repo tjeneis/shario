@@ -3,10 +3,10 @@
     <feed-header />
 
     <v-container
-      class="pa-6 pt-0 mt-n12"
+      class="pa-6 pt-0"
     >
       <masonry
-        :gutter="16"
+        :gutter="32"
         :cols="{ default: 4, 1024: 3, 768: 2, 425: 1 }"
       >
         <post

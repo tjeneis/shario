@@ -18,7 +18,7 @@ export default {
 <style lang="scss">
   .v-application {
     &.theme--light {
-      background: #f7f7f7 !important;
+      background: #F2F2F2 !important;
     }
     &.theme--dark {
       background: #121212 !important;

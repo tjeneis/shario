@@ -1,7 +1,7 @@
 <template>
   <v-card
     v-if="post"
-    class="mb-4"
+    class="mb-8"
     flat
     @click="$root.$emit('open-post', post.id)"
   >
@@ -17,7 +17,7 @@
       <v-chip
         v-if="author"
         class="font-weight-bold"
-        label
+        dark
         small
       >
         {{ author.data.name.toLowerCase() }}
@@ -25,31 +25,24 @@
 
       <v-spacer />
 
-      <v-btn
-        color="transparent"
-        depressed
-        :loading="loading.like"
-        @click.native.stop="likePost(post.id)"
-      >
+      <div class="d-flex align-center">
+        {{ post.data.likes }}
         <v-icon
+          class="pl-2"
           :color="likedPosts.includes(post.id) ? '#EA4C89' : '#C9C9C9'"
-          left
           :size="18"
+          @click.native.stop="likePost(post.id)"
         >
           {{ likedPosts.includes(post.id) ? 'mdi-heart' : 'mdi-heart-outline' }}
         </v-icon>
-        {{ post.data.likes }}
-      </v-btn>
+      </div>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import PostsMixin from '@/mixins/postsMixin';
-
 export default {
   name: 'Post',
-  mixins: [PostsMixin],
   props: {
     initialPost: {
       type: Object,
@@ -72,8 +65,9 @@ export default {
 <style lang="scss" scoped>
   .v-card {
     &__title {
+      font-size: 1.125rem;
       letter-spacing: normal;
-      line-height: 1.625rem;
+      line-height: 1.5rem;
       word-break: break-word;
     }
 
@@ -81,12 +75,12 @@ export default {
       background: none !important;
 
       &:before {
-        opacity: 0.05;
+        opacity: 0.24;
       }
 
       &:hover {
         &:before {
-          opacity: 0.05;
+          opacity: 0.24;
         }
       }
     }

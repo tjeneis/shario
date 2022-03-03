@@ -5,17 +5,17 @@ const ThemeRepository = Repository.get('themes');
 export default {
   data: () => ({
     themes: [],
-    theme: undefined,
+    activeTheme: null,
   }),
   created() {
     this.getThemes()
       .then(() => {
-        this.theme = this.themes[0].id;
+        this.activeTheme = this.themes[0].id;
       });
   },
   computed: {
-    activeTheme() {
-      return this.themes.find((t) => t.id === this.theme);
+    activeThemeConfig() {
+      return this.themes.find((t) => t.id === this.activeTheme);
     },
   },
   methods: {

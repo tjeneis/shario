@@ -2,6 +2,7 @@
   <v-bottom-sheet
     v-model="open"
     :max-width="$vuetify.breakpoint.mdAndUp ? 1161 : '100%'"
+    :overlay-opacity="0.75"
     scrollable
   >
     <v-card
@@ -20,7 +21,7 @@
                 <v-col cols="auto">
                   <v-chip
                     class="font-weight-bold"
-                    label
+                    dark
                     small
                   >
                     {{ author.data.name.toLowerCase() }}
@@ -81,11 +82,8 @@
 </template>
 
 <script>
-import PostsMixin from '@/mixins/postsMixin';
-
 export default {
   name: 'FullPost',
-  mixins: [PostsMixin],
   data() {
     return {
       author: undefined,
@@ -109,8 +107,9 @@ export default {
 <style lang="scss" scoped>
   .v-card {
     &__title {
+      font-size: 1.125rem;
       letter-spacing: normal;
-      line-height: 1.625rem;
+      line-height: 1.5rem;
       word-break: break-word;
     }
 
@@ -118,12 +117,12 @@ export default {
       background: none !important;
 
       &:before {
-        opacity: 0.05;
+        opacity: 0.24;
       }
 
       &:hover {
         &:before {
-          opacity: 0.05;
+          opacity: 0.24;
         }
       }
     }
