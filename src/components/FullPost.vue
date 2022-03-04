@@ -1,87 +1,122 @@
 <template>
   <v-bottom-sheet
-    v-model="open"
+    v-model="show"
     :max-width="$vuetify.breakpoint.mdAndUp ? 1161 : '100%'"
     :overlay-opacity="0.75"
     scrollable
   >
-    <v-card
-      min-height="100vh"
-    >
-      <div
-        v-if="post"
-        class="mx-auto"
-        :style="{
-          maxWidth: '900px'
-        }"
+    <simplebar data-simplebar-auto-hide="false">
+      <v-card
+        min-height="calc(100vh - 92px)"
       >
-        <v-row class="pt-6 mb-2">
-          <v-col cols="auto">
-            <v-chip
-              class="font-weight-bold"
-              dark
-              small
+        <div
+          class="mx-auto pa-6"
+          :style="{
+            maxWidth: $vuetify.breakpoint.mdAndUp ? '852px' : '100%'
+          }"
+        >
+          <v-row class="mb-2">
+            <v-col cols="auto">
+              <v-chip
+                class="font-weight-bold"
+                dark
+                small
+              >
+                {{ author?.data?.name?.toLowerCase() }}
+              </v-chip>
+            </v-col>
+            <v-col
+              class="pl-0"
+              cols="auto"
             >
-              {{ author.data.name.toLowerCase() }}
-            </v-chip>
-          </v-col>
-          <v-col
-            class="pl-0"
-            cols="auto"
-          >
-            {{ post.created | moment('LLLL') }}
-          </v-col>
-        </v-row>
+              {{ post?.created | moment('LLLL') }}
+            </v-col>
+          </v-row>
 
-        <h1 class="text-h5 font-weight-bold mb-6">
-          {{ post.data.title }}
-        </h1>
+          <h1 class="text-h5 font-weight-bold mb-6">
+            {{ post?.data?.title }}
+          </h1>
 
-        <v-img
-          v-if="post.data.image"
-          class="mb-6"
-          :max-height="480"
-          :src="`${srcBase}/${post.data.image[0]}`"
-        />
+          <v-img
+            v-if="post?.data?.image"
+            class="mb-6"
+            :max-height="480"
+            max-width="100%"
+            :src="`${srcBase}/${post.data.image[0]}`"
+          />
 
-        <!-- <v-col cols="auto">
-              <v-row align="center">
-                <v-col cols="auto">
-                  <v-tooltip>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        :color="likedPosts.includes(post.id) ? '#EA4C89' : '#C9C9C9'"
-                        :loading="loading.like"
-                        v-bind="attrs"
-                        @click.native.stop="likePost(post.id)"
-                        v-on="on"
-                      >
-                        {{ likedPosts.includes(post.id) ? 'mdi-heart' : 'mdi-heart-outline' }}
-                      </v-icon>
-                    </template>
-                    <span>{{ $t('LikePost') }}</span>
-                  </v-tooltip>
-                </v-col>
-                <v-col cols="auto">
-                  <v-tooltip>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        v-bind="attrs"
-                        v-on="on"
-                        @click="open = false"
-                      >
-                        mdi-close
-                      </v-icon>
-                    </template>
-                    <span>{{ $t('ClosePost') }}</span>
-                  </v-tooltip>
-                </v-col>
-              </v-row>
-            </v-col> -->
+          <div v-html="post?.data?.content" />
+        </div>
+      </v-card>
+    </simplebar>
 
-        <div v-html="post.data.content" />
-      </div>
-    </v-card>
+    <v-row
+      align="center"
+      class="flex-column"
+      :style="{
+        position: 'absolute',
+        top: '-1rem',
+        right: '2rem',
+        width: 'auto'
+      }"
+    >
+      <v-col
+        class="pb-2"
+        cols="auto"
+      >
+        <v-tooltip left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="white"
+              light
+              fab
+              depressed
+              small
+              :style="{
+                backdropFilter: 'blur(12px)'
+              }"
+              v-bind="attrs"
+              v-on="on"
+              @click="show = false"
+            >
+              <v-icon>
+                mdi-close
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>{{ $t('ClosePost') }}</span>
+        </v-tooltip>
+      </v-col>
+      <v-col
+        class="py-2"
+        cols="auto"
+      >
+        <v-tooltip left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              dark
+              depressed
+              fab
+              :loading="loading.like"
+              small
+              :style="{
+                backdropFilter: 'blur(12px)'
+              }"
+              v-bind="attrs"
+              v-on="on"
+              @click.native.stop="likePost(post?.id)"
+            >
+              <v-icon
+                :color="likedPosts.includes(post?.id) ? '#EA4C89' : '#C9C9C9'"
+              >
+                {{ likedPosts.includes(post?.id) ? 'mdi-heart' : 'mdi-heart-outline' }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>{{ $t('LikePost') }}</span>
+        </v-tooltip>
+      </v-col>
+    </v-row>
   </v-bottom-sheet>
 </template>
 
@@ -91,10 +126,24 @@ export default {
   data() {
     return {
       author: undefined,
-      open: false,
+      show: false,
       post: undefined,
       srcBase: `${process.env.VUE_APP_SQUIDEX_BASE_URI}/assets/${process.env.VUE_APP_SQUIDEX_APP}`,
+      loading: {
+        like: false,
+      },
     };
+  },
+  watch: {
+    show() {
+      if (this.show) {
+        document.body.style.height = '100vh';
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.height = '';
+        document.body.style.overflow = '';
+      }
+    },
   },
   created() {
     this.$root.$on('open-post', (id) => {
@@ -102,13 +151,25 @@ export default {
         .then(() => {
           this.getAuthor(this.post.data.author[0]);
         });
-      this.open = true;
+      this.show = true;
     });
   },
 };
 </script>
 
 <style lang="scss" scoped>
+  *::v-deep {
+    .simplebar-track.simplebar-vertical {
+      margin: 0.5rem !important;
+    }
+    .simplebar-scrollbar:before {
+      background: rgba(255,255,255,0.24);
+    }
+    .v-dialog {
+      position: relative;
+    }
+  }
+
   .v-card {
     &__title {
       font-size: 1.125rem;

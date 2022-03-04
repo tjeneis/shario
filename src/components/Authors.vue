@@ -17,7 +17,7 @@
         }"
       >
         <span class="font-weight-bold">{{ author.data.name.toLowerCase() }}</span>
-        <small class="pl-1">{{ `(${count})` }}</small>
+        <!-- <small class="pl-1">{{ `(0)` }}</small> -->
       </v-chip>
     </v-col>
   </v-row>
@@ -29,7 +29,6 @@ export default {
   data() {
     return {
       authors: [],
-      count: 10,
     };
   },
   created() {

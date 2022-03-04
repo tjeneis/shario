@@ -6,10 +6,6 @@ const PostRepository = Repository.get('posts');
 export default {
   data: () => ({
     likedPosts: [],
-    loading: {
-      post: false,
-      like: false,
-    },
   }),
   mounted() {
     if (localStorage.likedPosts) {

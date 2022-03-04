@@ -1,4 +1,7 @@
 {
     "LikePost": "Like this post",
-    "ClosePost": "Go back to feed"
+    "ClosePost": "Go back to feed",
+    "CopyLink": "Copy link",
+    "DarkMode": "Dark mode",
+    "AddNewPost": "Add new post"
 }

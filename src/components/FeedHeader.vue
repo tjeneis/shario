@@ -1,6 +1,6 @@
 <template>
   <v-parallax
-    class="pb-12"
+    class="pb-6 pb-md-12"
     height="auto"
     :src="banner"
   >
@@ -14,29 +14,31 @@
         cols="auto"
       >
         <logo class="logo" />
-        <span class="pl-4">/</span>
-        <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="font-weight-bold"
-              dark
-              text
-              v-bind="attrs"
-              v-on="on"
-            >
-              {{ activeThemeConfig && activeThemeConfig.data.name }}
-            </v-btn>
-          </template>
-          <v-list class="py-0">
-            <v-list-item
-              v-for="t in themes.filter(t => t.id !== theme)"
-              :key="t.id"
-              @click="activeTheme = t.id"
-            >
-              <v-list-item-title>{{ t.data.name }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <template v-if="$vuetify.breakpoint.mdAndUp">
+          <span class="pl-4">/</span>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="font-weight-bold"
+                dark
+                text
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{ activeThemeConfig?.data?.name }}
+              </v-btn>
+            </template>
+            <v-list class="py-0">
+              <v-list-item
+                v-for="t in themes.filter(t => t.id !== activeTheme)"
+                :key="t.id"
+                @click="activeTheme = t.id"
+              >
+                <v-list-item-title>{{ t.data.name }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </template>
       </v-col>
 
       <v-col
@@ -51,50 +53,71 @@
             class="px-2"
             cols="auto"
           >
-            <v-btn
-              color="rgba(255, 255, 255, 0.24)"
-              dark
-              depressed
-              fab
-              small
-              :style="{
-                backdropFilter: 'blur(12px)'
-              }"
-            >
-              <v-icon>mdi-link-variant</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="rgba(255, 255, 255, 0.24)"
+                  dark
+                  depressed
+                  fab
+                  small
+                  :style="{
+                    backdropFilter: 'blur(12px)'
+                  }"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-link-variant</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t('CopyLink') }}</span>
+            </v-tooltip>
           </v-col>
           <v-col
             class="px-2"
             cols="auto"
           >
-            <v-btn
-              color="rgba(255, 255, 255, 0.24)"
-              dark
-              depressed
-              fab
-              small
-              :style="{
-                backdropFilter: 'blur(12px)'
-              }"
-              @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-            >
-              <v-icon>mdi-white-balance-sunny</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="rgba(255, 255, 255, 0.24)"
+                  dark
+                  depressed
+                  fab
+                  small
+                  :style="{
+                    backdropFilter: 'blur(12px)'
+                  }"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+                >
+                  <v-icon>mdi-white-balance-sunny</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t('DarkMode') }}</span>
+            </v-tooltip>
           </v-col>
           <v-col
             class="pl-2"
             cols="auto"
           >
-            <v-btn
-              color="white"
-              light
-              fab
-              depressed
-              small
-            >
-              <v-icon>mdi-shape-square-plus</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="white"
+                  light
+                  fab
+                  depressed
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-shape-square-plus</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t('AddNewPost') }}</span>
+            </v-tooltip>
           </v-col>
         </v-row>
       </v-col>
@@ -108,12 +131,10 @@
         class="text-center my-12"
         cols="auto"
       >
-        <h3 class="text-h3 font-italic font-weight-regular mb-3">
-          {{ 'back & forward' }}
-        </h3>
-        <h3 class="text-h3 font-weight-medium mb-6">
-          {{ activeThemeConfig && activeThemeConfig.data.title }}
-        </h3>
+        <h3
+          class="text-h3"
+          v-html="activeThemeConfig?.data?.title"
+        />
       </v-col>
 
       <v-col cols="auto">
@@ -126,6 +147,7 @@
 <script>
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
+import ThemesMixin from '@/mixins/themesMixin';
 import Authors from '@/components/Authors';
 import Logo from '@/assets/io-logo.svg';
 
@@ -135,10 +157,16 @@ export default {
     Authors,
     Logo,
   },
+  mixins: [
+    ThemesMixin,
+  ],
   computed: {
     banner() {
       return this.activeThemeConfig ? `https://cloud.squidex.io/api/assets/shario/${this.activeThemeConfig.data.banner[0]}` : undefined;
     },
+  },
+  created() {
+    this.getThemes();
   },
 };
 </script>

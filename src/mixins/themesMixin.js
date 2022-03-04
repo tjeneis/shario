@@ -7,12 +7,6 @@ export default {
     themes: [],
     activeTheme: null,
   }),
-  created() {
-    this.getThemes()
-      .then(() => {
-        this.activeTheme = this.themes[0].id;
-      });
-  },
   computed: {
     activeThemeConfig() {
       return this.themes.find((t) => t.id === this.activeTheme);
@@ -22,6 +16,7 @@ export default {
     async getThemes() {
       const { data } = await ThemeRepository.get();
       this.themes = data?.items;
+      this.activeTheme = this.themes[0]?.id;
     },
   },
 };

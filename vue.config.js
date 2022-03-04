@@ -1,8 +1,18 @@
+/* eslint-disable global-require */
 module.exports = {
   configureWebpack: {
     devtool: 'source-map',
   },
   chainWebpack: (config) => {
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .tap((options) => {
+      // eslint-disable-next-line no-param-reassign
+        options.compiler = require('vue-template-babel-compiler');
+        return options;
+      });
+
     config.module
       .rule('graphql')
       .test(/\.(gql|graphql)$/)
