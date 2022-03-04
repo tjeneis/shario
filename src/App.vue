@@ -10,6 +10,10 @@
 
 <script>
 export default {
+  name: 'App',
+  metaInfo: {
+    titleTemplate: 'ShariO',
+  },
 };
 </script>
 

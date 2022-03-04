@@ -9,6 +9,7 @@ import store from '@/store';
 import '@/plugins/vue-toast-notification';
 import '@/plugins/simplebar-vue';
 import '@/plugins/vue-masonry-css';
+import '@/plugins/vue-meta';
 import '@/plugins/vue-moment';
 
 // Mixins

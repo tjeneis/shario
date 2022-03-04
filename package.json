@@ -23,6 +23,7 @@
     "vue-apollo": "^3.1.0",
     "vue-i18n": "^8.26.3",
     "vue-masonry-css": "^1.0.3",
+    "vue-meta": "^2.4.0",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0",
     "vue-template-babel-compiler": "^1.1.3",
