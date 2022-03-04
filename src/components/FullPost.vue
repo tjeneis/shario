@@ -94,6 +94,32 @@
         <v-tooltip left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
+              color="rgba(255, 255, 255, 0.24)"
+              dark
+              depressed
+              fab
+              small
+              :style="{
+                backdropFilter: 'blur(12px)'
+              }"
+              v-bind="attrs"
+              v-on="on"
+              @click="copyLinkToClipboard"
+            >
+              <v-icon>mdi-link-variant</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ $t('CopyLink') }}</span>
+        </v-tooltip>
+      </v-col>
+      <v-col
+        class="py-2"
+        cols="auto"
+      >
+        <v-tooltip left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="rgba(255, 255, 255, 0.24)"
               dark
               depressed
               fab
@@ -142,6 +168,9 @@ export default {
       } else {
         document.body.style.height = '';
         document.body.style.overflow = '';
+        // eslint-disable-next-line no-restricted-globals
+        history.pushState('', document.title, window.location.pathname
+                                                       + window.location.search);
       }
     },
   },
@@ -150,9 +179,17 @@ export default {
       this.getPost(id)
         .then(() => {
           this.getAuthor(this.post.data.author[0]);
+          window.location.hash = this.post.id;
         });
       this.show = true;
     });
+  },
+  methods: {
+    copyLinkToClipboard() {
+      const { location } = window;
+      navigator.clipboard.writeText(location);
+      this.$toast.open(this.$t('LinkCopiedToClipboard'));
+    },
   },
 };
 </script>

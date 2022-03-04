@@ -66,6 +66,7 @@
                   }"
                   v-bind="attrs"
                   v-on="on"
+                  @click="copyLinkToClipboard"
                 >
                   <v-icon>mdi-link-variant</v-icon>
                 </v-btn>
@@ -167,6 +168,13 @@ export default {
   },
   created() {
     this.getThemes();
+  },
+  methods: {
+    copyLinkToClipboard() {
+      const { location } = window;
+      navigator.clipboard.writeText(location);
+      this.$toast.open(this.$t('LinkCopiedToClipboard'));
+    },
   },
 };
 </script>

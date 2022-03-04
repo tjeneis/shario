@@ -6,6 +6,7 @@ import { vuetify } from '@/plugins/vuetify';
 import i18n from '@/plugins/i18n';
 import router from '@/router';
 import store from '@/store';
+import '@/plugins/vue-toast-notification';
 import '@/plugins/simplebar-vue';
 import '@/plugins/vue-masonry-css';
 import '@/plugins/vue-moment';

@@ -48,6 +48,12 @@ export default {
     this.getAuthors();
     this.getPosts();
   },
+  mounted() {
+    const postId = window.location.hash?.split('#')[1];
+    if (postId) {
+      this.$root.$emit('open-post', postId);
+    }
+  },
   methods: {
     async getAuthors() {
       const { data } = await AuthorRepository.get();

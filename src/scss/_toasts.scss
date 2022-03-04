@@ -1,0 +1,39 @@
+.v-toast {
+    font-family: $body-font-family;
+    padding: 0.75rem;
+
+    .v-toast__item {
+        min-height: unset;
+
+        &--default {
+            background-color: var(--v-base-base);
+        }
+        &--success {
+            background-color: var(--v-success-base);
+        }
+        &--error {
+            background-color: var(--v-error-base);
+        }
+        &--warning {
+            background-color: var(--v-warning-darken1);
+        }
+        &--info {
+            background-color: var(--v-info-base);
+        }
+
+        .v-toast__icon {
+            height: 20px;
+            min-width: 20px;
+            width: 20px;
+        }
+        .v-toast__text {
+            padding: 1em;
+            margin-right: 0.5em;
+        }
+
+        p {
+            font-size: 0.875rem;
+            font-weight: 400;
+        }
+    }
+}
