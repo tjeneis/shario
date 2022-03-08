@@ -53,16 +53,17 @@
 
     <v-row
       align="center"
-      class="flex-column"
+      :class="{ 'flex-column': $vuetify.breakpoint.mdAndUp, 'flex-row': !$vuetify.breakpoint.mdAndUp }"
+      justify="center"
       :style="{
         position: 'absolute',
-        top: '-1rem',
+        top: '-1.25rem',
         right: '2rem',
         width: 'auto'
       }"
     >
       <v-col
-        class="pb-2"
+        :class="{ 'pb-2': $vuetify.breakpoint.mdAndUp, 'pr-2': !$vuetify.breakpoint.mdAndUp }"
         cols="auto"
       >
         <v-tooltip left>
@@ -89,7 +90,7 @@
         </v-tooltip>
       </v-col>
       <v-col
-        class="py-2"
+        :class="{ 'py-2': $vuetify.breakpoint.mdAndUp, 'px-2': !$vuetify.breakpoint.mdAndUp }"
         cols="auto"
       >
         <v-tooltip left>
@@ -114,7 +115,7 @@
         </v-tooltip>
       </v-col>
       <v-col
-        class="py-2"
+        :class="{ 'pb-2': $vuetify.breakpoint.mdAndUp, 'pl-2': !$vuetify.breakpoint.mdAndUp }"
         cols="auto"
       >
         <v-tooltip left>
