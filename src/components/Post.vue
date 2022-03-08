@@ -17,6 +17,7 @@
       <v-chip
         v-if="author"
         class="font-weight-bold"
+        :color="$vuetify.theme.dark ? 'rgba(255,255,255,0.24)' : 'rgba(0,0,0,0.24)'"
         dark
         small
       >
@@ -69,20 +70,6 @@ export default {
       letter-spacing: normal;
       line-height: 1.5rem;
       word-break: break-word;
-    }
-
-    .v-chip {
-      background: none !important;
-
-      &:before {
-        opacity: 0.24;
-      }
-
-      &:hover {
-        &:before {
-          opacity: 0.24;
-        }
-      }
     }
   }
 </style>
