@@ -1,0 +1,14 @@
+query getAuthorsWithTotals {
+    queryAuthorsContentsWithTotal {
+        total
+        items {
+            id
+            flatData {
+                name
+            }
+            referencingPostsContentsWithTotal {
+                total
+            }
+		}
+    }
+}

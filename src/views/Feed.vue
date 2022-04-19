@@ -27,7 +27,6 @@ import FullPost from '@/components/FullPost';
 import Post from '@/components/Post';
 import FeedHeader from '@/components/FeedHeader';
 
-const AuthorRepository = Repository.get('authors');
 const PostRepository = Repository.get('posts');
 
 export default {
@@ -39,13 +38,11 @@ export default {
   },
   data() {
     return {
-      authors: [],
       open: false,
       posts: [],
     };
   },
   created() {
-    this.getAuthors();
     this.getPosts();
   },
   mounted() {
@@ -55,10 +52,6 @@ export default {
     }
   },
   methods: {
-    async getAuthors() {
-      const { data } = await AuthorRepository.get();
-      this.authors = data?.items;
-    },
     async getPosts() {
       const { data } = await PostRepository.get({ params: { $orderby: 'created desc' } });
       this.posts = data?.items;

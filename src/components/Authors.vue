@@ -24,15 +24,19 @@
 </template>
 
 <script>
+import getAuthorsWithTotals from '@/apollo/queries/getAuthorsWithTotals.gql';
+
 export default {
   name: 'Authors',
-  data() {
-    return {
-      authors: [],
-    };
-  },
-  created() {
-    this.getAuthors();
+  apollo: {
+    authors: {
+      query: getAuthorsWithTotals,
+      update: (data) => {
+        console.log(data);
+
+        return data;
+      },
+    },
   },
 };
 </script>

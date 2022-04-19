@@ -24,10 +24,6 @@ export default {
       this.post = data;
       this.loading.post = false;
     },
-    async getAuthors() {
-      const { data } = await AuthorRepository.get();
-      this.authors = data?.items;
-    },
     async getAuthor(id) {
       const { data } = await AuthorRepository.getAuthor(id);
       this.author = data;

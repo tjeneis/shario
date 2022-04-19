@@ -10,7 +10,7 @@
         min-height="calc(100vh - 92px)"
       >
         <div
-          class="mx-auto pa-6"
+          class="mx-auto px-6 py-12 py-md-6"
           :style="{
             maxWidth: $vuetify.breakpoint.mdAndUp ? '852px' : '100%'
           }"
