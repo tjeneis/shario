@@ -13,7 +13,12 @@
         class="d-flex align-center"
         cols="auto"
       >
-        <logo class="logo" />
+        <lottie-animation
+          class="logo"
+          :height="48"
+          :loop="false"
+          path="animations/io-logo.json"
+        />
         <template v-if="$vuetify.breakpoint.mdAndUp">
           <span class="pl-4">/</span>
           <v-menu offset-y>
@@ -23,6 +28,9 @@
                 dark
                 text
                 v-bind="attrs"
+                :style="{
+                  pointerEvents: themes.length === 1 ? 'none' : 'auto'
+                }"
                 v-on="on"
               >
                 {{ activeThemeConfig?.data?.name }}
@@ -148,15 +156,15 @@
 <script>
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
+import LottieAnimation from 'lottie-vuejs/src/LottieAnimation';
 import ThemesMixin from '@/mixins/themesMixin';
 import Authors from '@/components/Authors';
-import Logo from '@/assets/io-logo.svg';
 
 export default {
   name: 'FeedHeader',
   components: {
     Authors,
-    Logo,
+    LottieAnimation,
   },
   mixins: [
     ThemesMixin,
@@ -180,6 +188,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .logo {
+    margin-left: -1rem !important;
+  }
+
   .v-parallax::v-deep {
     overflow: visible;
 
@@ -212,7 +224,7 @@ export default {
 
     .v-parallax__content {
       justify-content: start;
-      padding: 24px;
+      padding: 2.5rem;
     }
   }
 </style>

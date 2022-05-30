@@ -17,8 +17,8 @@
       <v-chip
         v-if="author"
         class="font-weight-bold"
-        :color="$vuetify.theme.dark ? 'rgba(255,255,255,0.24)' : 'rgba(0,0,0,0.24)'"
-        dark
+        :dark="$vuetify.theme.light"
+        :light="$vuetify.theme.dark"
         small
       >
         {{ author.data.name.toLowerCase() }}
@@ -55,6 +55,9 @@ export default {
       author: undefined,
       post: this.initialPost,
       srcBase: `${process.env.VUE_APP_SQUIDEX_BASE_URI}/assets/${process.env.VUE_APP_SQUIDEX_APP}`,
+      loading: {
+        like: false,
+      },
     };
   },
   created() {
